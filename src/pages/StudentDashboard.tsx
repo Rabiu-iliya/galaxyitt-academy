@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   LayoutDashboard, BookOpen, Layers, Video, FileText,
   FolderKanban, Award, CreditCard, User, LogOut,
@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@/contexts/AuthContext";
 
 const sidebarItems = [
   { icon: LayoutDashboard, label: "Dashboard", href: "/student" },
@@ -26,6 +27,13 @@ const sidebarItems = [
 const StudentDashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+  const { profile, signOut } = useAuth();
+
+  const handleSignOut = async () => {
+    await signOut();
+    navigate("/");
+  };
 
   return (
     <div className="flex min-h-screen bg-background">
@@ -60,9 +68,9 @@ const StudentDashboard = () => {
           })}
         </nav>
         <div className="border-t border-sidebar-border p-3">
-          <Link to="/" className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-sidebar-foreground/70 hover:bg-sidebar-accent">
+          <button onClick={handleSignOut} className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-sidebar-foreground/70 hover:bg-sidebar-accent">
             <LogOut className="h-4 w-4" /> Log Out
-          </Link>
+          </button>
         </div>
       </aside>
 
@@ -82,7 +90,7 @@ const StudentDashboard = () => {
 
         <main className="flex-1 p-4 md:p-6">
           <div className="mb-6">
-            <h2 className="text-2xl font-bold">Welcome back, Student!</h2>
+            <h2 className="text-2xl font-bold">Welcome back, {profile?.full_name || "Student"}!</h2>
             <p className="text-muted-foreground">Here's your learning overview.</p>
           </div>
 
