@@ -90,7 +90,7 @@ const StudentDashboard = () => {
 
         <main className="flex-1 p-4 md:p-6">
           <div className="mb-6">
-            <h2 className="text-2xl font-bold">Welcome back, Student!</h2>
+            <h2 className="text-2xl font-bold">Welcome back, {profile?.full_name || "Student"}!</h2>
             <p className="text-muted-foreground">Here's your learning overview.</p>
           </div>
 
