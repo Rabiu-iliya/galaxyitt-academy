@@ -1,16 +1,36 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import { Menu, X, Moon, Sun, GraduationCap } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { Menu, X, Moon, Sun, GraduationCap, LogOut, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/contexts/AuthContext";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [dark, setDark] = useState(false);
+  const { user, profile, roles, signOut } = useAuth();
+  const navigate = useNavigate();
 
   const toggleDark = () => {
     setDark(!dark);
     document.documentElement.classList.toggle("dark");
   };
+
+  const handleSignOut = async () => {
+    await signOut();
+    navigate("/");
+  };
+
+  const dashboardPath = roles.includes("admin") || roles.includes("super_admin")
+    ? "/admin"
+    : roles.includes("instructor")
+    ? "/instructor"
+    : "/student";
 
   const links = [
     { label: "Programs", href: "/programs" },
@@ -40,14 +60,25 @@ export function Navbar() {
           <Button variant="ghost" size="icon" onClick={toggleDark}>
             {dark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
           </Button>
-          <Link to="/login">
-            <Button variant="outline" size="sm">Log In</Button>
-          </Link>
-          <Link to="/register">
-            <Button size="sm" className="bg-accent text-accent-foreground hover:bg-accent/90">
-              Get Started
-            </Button>
-          </Link>
+          {user ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="sm" className="gap-2">
+                  <User className="h-4 w-4" />
+                  {profile?.full_name || "Account"}
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem onClick={() => navigate(dashboardPath)}>Dashboard</DropdownMenuItem>
+                <DropdownMenuItem onClick={handleSignOut}><LogOut className="mr-2 h-4 w-4" />Log Out</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <>
+              <Link to="/login"><Button variant="outline" size="sm">Log In</Button></Link>
+              <Link to="/register"><Button size="sm" className="bg-accent text-accent-foreground hover:bg-accent/90">Get Started</Button></Link>
+            </>
+          )}
         </div>
 
         <div className="flex items-center gap-2 md:hidden">
@@ -68,14 +99,17 @@ export function Navbar() {
                 {l.label}
               </Link>
             ))}
-            <div className="flex gap-2 pt-2">
-              <Link to="/login" className="flex-1">
-                <Button variant="outline" className="w-full" size="sm">Log In</Button>
-              </Link>
-              <Link to="/register" className="flex-1">
-                <Button className="w-full bg-accent text-accent-foreground hover:bg-accent/90" size="sm">Get Started</Button>
-              </Link>
-            </div>
+            {user ? (
+              <>
+                <Link to={dashboardPath} className="text-sm font-medium text-muted-foreground" onClick={() => setMobileOpen(false)}>Dashboard</Link>
+                <Button variant="outline" size="sm" onClick={() => { handleSignOut(); setMobileOpen(false); }}>Log Out</Button>
+              </>
+            ) : (
+              <div className="flex gap-2 pt-2">
+                <Link to="/login" className="flex-1"><Button variant="outline" className="w-full" size="sm">Log In</Button></Link>
+                <Link to="/register" className="flex-1"><Button className="w-full bg-accent text-accent-foreground hover:bg-accent/90" size="sm">Get Started</Button></Link>
+              </div>
+            )}
           </div>
         </div>
       )}
