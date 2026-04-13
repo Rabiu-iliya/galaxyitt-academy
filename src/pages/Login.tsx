@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
@@ -14,15 +14,21 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const { signIn, user, roles } = useAuth();
+  const { signIn, user, roles, loading: authLoading } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
 
   // Redirect if already logged in
-  if (user && roles.length > 0) {
-    const target = roles.includes("admin") || roles.includes("super_admin") ? "/admin" : roles.includes("instructor") ? "/instructor" : "/student";
-    navigate(target, { replace: true });
-  }
+  useEffect(() => {
+    if (!authLoading && user && roles.length > 0) {
+      const target = roles.includes("admin") || roles.includes("super_admin")
+        ? "/admin"
+        : roles.includes("instructor")
+        ? "/instructor"
+        : "/student";
+      navigate(target, { replace: true });
+    }
+  }, [user, roles, authLoading, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -31,9 +37,8 @@ const Login = () => {
     setLoading(false);
     if (error) {
       toast({ title: "Login failed", description: error.message, variant: "destructive" });
-    } else {
-      toast({ title: "Welcome back!" });
     }
+    // redirect handled by useEffect above once roles load
   };
 
   return (
