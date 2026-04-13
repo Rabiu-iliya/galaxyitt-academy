@@ -1,14 +1,19 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate, Routes, Route } from "react-router-dom";
 import {
   LayoutDashboard, BookOpen, Users, UserCheck, CreditCard,
   BarChart3, Award, Megaphone, Settings, LogOut,
   GraduationCap, Menu, Layers,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/contexts/AuthContext";
+import AdminHome from "./admin/AdminHome";
+import ManagePrograms from "./admin/ManagePrograms";
+import ManageCohorts from "./admin/ManageCohorts";
+import ManageStudents from "./admin/ManageStudents";
+import AdminPayments from "./admin/AdminPayments";
+import PlaceholderPage from "./shared/PlaceholderPage";
 
 const sidebarItems = [
   { icon: LayoutDashboard, label: "Dashboard", href: "/admin" },
@@ -75,58 +80,18 @@ const AdminDashboard = () => {
         </header>
 
         <main className="flex-1 p-4 md:p-6">
-          <div className="mb-6">
-            <h2 className="text-2xl font-bold">Admin Overview</h2>
-            <p className="text-muted-foreground">Manage your academy from one place.</p>
-          </div>
-
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {[
-              { label: "Total Students", value: "1,247", icon: Users },
-              { label: "Active Cohorts", value: "8", icon: Layers },
-              { label: "Programs", value: "14", icon: BookOpen },
-              { label: "Revenue", value: "₦48.2M", icon: CreditCard },
-            ].map((s) => (
-              <Card key={s.label}>
-                <CardHeader className="flex flex-row items-center justify-between pb-2">
-                  <CardTitle className="text-sm font-medium text-muted-foreground">{s.label}</CardTitle>
-                  <s.icon className="h-4 w-4 text-muted-foreground" />
-                </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold">{s.value}</div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-
-          <div className="mt-6 grid gap-4 md:grid-cols-2">
-            <Card>
-              <CardHeader><CardTitle>Recent Enrollments</CardTitle></CardHeader>
-              <CardContent className="space-y-3">
-                {["Adaeze Okafor — AI & ML", "Ibrahim Yusuf — Cybersecurity", "Chidinma Eze — Full Stack Web Dev"].map((e) => (
-                  <div key={e} className="flex items-center justify-between border-b pb-2 last:border-0 last:pb-0">
-                    <span className="text-sm">{e}</span>
-                    <span className="text-xs text-muted-foreground">Today</span>
-                  </div>
-                ))}
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader><CardTitle>Recent Payments</CardTitle></CardHeader>
-              <CardContent className="space-y-3">
-                {[
-                  { name: "Adaeze Okafor", amount: "₦220,000" },
-                  { name: "Ibrahim Yusuf", amount: "₦200,000" },
-                  { name: "Chidinma Eze", amount: "₦150,000" },
-                ].map((p) => (
-                  <div key={p.name} className="flex items-center justify-between border-b pb-2 last:border-0 last:pb-0">
-                    <span className="text-sm">{p.name}</span>
-                    <span className="text-sm font-semibold text-accent">{p.amount}</span>
-                  </div>
-                ))}
-              </CardContent>
-            </Card>
-          </div>
+          <Routes>
+            <Route index element={<AdminHome />} />
+            <Route path="programs" element={<ManagePrograms />} />
+            <Route path="cohorts" element={<ManageCohorts />} />
+            <Route path="students" element={<ManageStudents />} />
+            <Route path="instructors" element={<PlaceholderPage title="Manage Instructors" />} />
+            <Route path="payments" element={<AdminPayments />} />
+            <Route path="analytics" element={<PlaceholderPage title="Analytics" />} />
+            <Route path="certificates" element={<PlaceholderPage title="Certificates" />} />
+            <Route path="announcements" element={<PlaceholderPage title="Announcements" />} />
+            <Route path="settings" element={<PlaceholderPage title="Settings" />} />
+          </Routes>
         </main>
       </div>
     </div>
