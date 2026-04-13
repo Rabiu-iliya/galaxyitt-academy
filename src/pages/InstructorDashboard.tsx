@@ -1,13 +1,14 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate, Routes, Route } from "react-router-dom";
 import {
   LayoutDashboard, Users, BookOpen, Video, FileText,
   ClipboardCheck, LogOut, GraduationCap, Menu, Layers,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/contexts/AuthContext";
+import InstructorHome from "./instructor/InstructorHome";
+import PlaceholderPage from "./shared/PlaceholderPage";
 
 const sidebarItems = [
   { icon: LayoutDashboard, label: "Dashboard", href: "/instructor" },
@@ -71,48 +72,15 @@ const InstructorDashboard = () => {
         </header>
 
         <main className="flex-1 p-4 md:p-6">
-          <div className="mb-6">
-            <h2 className="text-2xl font-bold">Welcome, Instructor!</h2>
-            <p className="text-muted-foreground">Manage your cohorts and students.</p>
-          </div>
-
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            <Card>
-              <CardHeader className="pb-2"><CardTitle className="text-sm font-medium text-muted-foreground">Assigned Cohorts</CardTitle></CardHeader>
-              <CardContent><div className="text-2xl font-bold">3</div></CardContent>
-            </Card>
-            <Card>
-              <CardHeader className="pb-2"><CardTitle className="text-sm font-medium text-muted-foreground">Total Students</CardTitle></CardHeader>
-              <CardContent><div className="text-2xl font-bold">87</div></CardContent>
-            </Card>
-            <Card>
-              <CardHeader className="pb-2"><CardTitle className="text-sm font-medium text-muted-foreground">Pending Submissions</CardTitle></CardHeader>
-              <CardContent><div className="text-2xl font-bold">12</div></CardContent>
-            </Card>
-          </div>
-
-          <div className="mt-6">
-            <Card>
-              <CardHeader><CardTitle>My Cohorts</CardTitle></CardHeader>
-              <CardContent className="space-y-3">
-                {[
-                  { name: "AI & ML — Cohort A", students: 30, status: "Active" },
-                  { name: "Data Science — Cohort B", students: 28, status: "Active" },
-                  { name: "Cybersecurity — Cohort A", students: 29, status: "Upcoming" },
-                ].map((c) => (
-                  <div key={c.name} className="flex items-center justify-between border-b pb-2 last:border-0 last:pb-0">
-                    <div>
-                      <div className="text-sm font-medium">{c.name}</div>
-                      <div className="text-xs text-muted-foreground">{c.students} students</div>
-                    </div>
-                    <span className={cn("text-xs font-medium rounded-full px-2 py-1",
-                      c.status === "Active" ? "bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300" : "bg-muted text-muted-foreground"
-                    )}>{c.status}</span>
-                  </div>
-                ))}
-              </CardContent>
-            </Card>
-          </div>
+          <Routes>
+            <Route index element={<InstructorHome />} />
+            <Route path="cohorts" element={<PlaceholderPage title="My Cohorts" />} />
+            <Route path="lessons" element={<PlaceholderPage title="Lessons" />} />
+            <Route path="live-classes" element={<PlaceholderPage title="Live Classes" />} />
+            <Route path="assignments" element={<PlaceholderPage title="Assignments" />} />
+            <Route path="attendance" element={<PlaceholderPage title="Attendance" />} />
+            <Route path="students" element={<PlaceholderPage title="My Students" />} />
+          </Routes>
         </main>
       </div>
     </div>
