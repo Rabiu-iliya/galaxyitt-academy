@@ -8,6 +8,9 @@ import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/contexts/AuthContext";
 import InstructorHome from "./instructor/InstructorHome";
+import ManageLiveClasses from "./instructor/ManageLiveClasses";
+import ManageAssignments from "./instructor/ManageAssignments";
+import ViewSubmissions from "./instructor/ViewSubmissions";
 import PlaceholderPage from "./shared/PlaceholderPage";
 
 const sidebarItems = [
@@ -16,7 +19,7 @@ const sidebarItems = [
   { icon: BookOpen, label: "Lessons", href: "/instructor/lessons" },
   { icon: Video, label: "Live Classes", href: "/instructor/live-classes" },
   { icon: FileText, label: "Assignments", href: "/instructor/assignments" },
-  { icon: ClipboardCheck, label: "Attendance", href: "/instructor/attendance" },
+  { icon: ClipboardCheck, label: "Submissions", href: "/instructor/submissions" },
   { icon: Users, label: "Students", href: "/instructor/students" },
 ];
 
@@ -76,9 +79,9 @@ const InstructorDashboard = () => {
             <Route index element={<InstructorHome />} />
             <Route path="cohorts" element={<PlaceholderPage title="My Cohorts" />} />
             <Route path="lessons" element={<PlaceholderPage title="Lessons" />} />
-            <Route path="live-classes" element={<PlaceholderPage title="Live Classes" />} />
-            <Route path="assignments" element={<PlaceholderPage title="Assignments" />} />
-            <Route path="attendance" element={<PlaceholderPage title="Attendance" />} />
+            <Route path="live-classes" element={<ManageLiveClasses />} />
+            <Route path="assignments" element={<ManageAssignments />} />
+            <Route path="submissions" element={<ViewSubmissions />} />
             <Route path="students" element={<PlaceholderPage title="My Students" />} />
           </Routes>
         </main>

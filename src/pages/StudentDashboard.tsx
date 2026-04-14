@@ -11,6 +11,8 @@ import { useAuth } from "@/contexts/AuthContext";
 import DashboardHome from "./student/DashboardHome";
 import MyProgram from "./student/MyProgram";
 import Modules from "./student/Modules";
+import ModuleDetail from "./student/ModuleDetail";
+import LessonViewer from "./student/LessonViewer";
 import LiveClasses from "./student/LiveClasses";
 import Assignments from "./student/Assignments";
 import Projects from "./student/Projects";
@@ -53,7 +55,7 @@ const StudentDashboard = () => {
         </div>
         <nav className="flex-1 space-y-1 overflow-y-auto p-3">
           {sidebarItems.map((item) => {
-            const active = location.pathname === item.href;
+            const active = location.pathname === item.href || (item.href !== "/student" && location.pathname.startsWith(item.href));
             return (
               <Link
                 key={item.href}
@@ -94,6 +96,8 @@ const StudentDashboard = () => {
             <Route index element={<DashboardHome />} />
             <Route path="program" element={<MyProgram />} />
             <Route path="modules" element={<Modules />} />
+            <Route path="modules/:moduleId" element={<ModuleDetail />} />
+            <Route path="lessons/:lessonId" element={<LessonViewer />} />
             <Route path="live-classes" element={<LiveClasses />} />
             <Route path="assignments" element={<Assignments />} />
             <Route path="projects" element={<Projects />} />
