@@ -2,45 +2,37 @@ import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { Video, FileText } from "lucide-react";
+import { Video, FileText, Calendar } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
-
-interface EnrollmentData {
-  id: string;
-  status: string;
-  program: { name: string; price: number; duration: string };
-  cohort: { name: string; start_date: string };
-}
+import { useEnrollment } from "@/hooks/useEnrollment";
 
 const DashboardHome = () => {
-  const { user } = useAuth();
   const { profile } = useAuth();
-  const [enrollment, setEnrollment] = useState<EnrollmentData | null>(null);
-  const [loading, setLoading] = useState(true);
+  const { enrollment, loading } = useEnrollment();
+  const [nextClass, setNextClass] = useState<{ title: string; scheduled_at: string } | null>(null);
+  const [assignmentCount, setAssignmentCount] = useState(0);
 
   useEffect(() => {
-    if (!user) return;
-    const fetch = async () => {
-      const { data } = await supabase
-        .from("enrollments")
-        .select("id, status, programs(name, price, duration), cohorts(name, start_date)")
-        .eq("user_id", user.id)
-        .order("created_at", { ascending: false })
-        .limit(1)
-        .single();
-      if (data) {
-        setEnrollment({
-          id: data.id,
-          status: data.status,
-          program: data.programs as any,
-          cohort: data.cohorts as any,
-        });
-      }
-      setLoading(false);
-    };
-    fetch();
-  }, [user]);
+    if (!enrollment) return;
+    // Fetch next live class
+    supabase
+      .from("live_classes")
+      .select("title, scheduled_at")
+      .eq("program_id", enrollment.program_id)
+      .gte("scheduled_at", new Date().toISOString())
+      .order("scheduled_at")
+      .limit(1)
+      .single()
+      .then(({ data }) => { if (data) setNextClass(data); });
+
+    // Fetch assignment count
+    supabase
+      .from("assignments")
+      .select("id", { count: "exact", head: true })
+      .eq("program_id", enrollment.program_id)
+      .then(({ count }) => setAssignmentCount(count || 0));
+  }, [enrollment]);
 
   if (loading) return <div className="flex items-center justify-center p-12"><div className="h-8 w-8 animate-spin rounded-full border-4 border-accent border-t-transparent" /></div>;
 
@@ -55,7 +47,7 @@ const DashboardHome = () => {
         <Card>
           <CardContent className="p-8 text-center">
             <h3 className="text-lg font-semibold mb-2">No Program Enrolled</h3>
-            <p className="text-muted-foreground mb-4">You haven't enrolled in any program yet. Browse our programs to get started.</p>
+            <p className="text-muted-foreground mb-4">You haven't enrolled in any program yet.</p>
             <a href="/programs" className="text-accent hover:underline font-medium">Browse Programs →</a>
           </CardContent>
         </Card>
@@ -89,21 +81,31 @@ const DashboardHome = () => {
             <Card>
               <CardHeader><CardTitle>Next Live Class</CardTitle></CardHeader>
               <CardContent>
-                <div className="flex items-center gap-3">
-                  <Video className="h-8 w-8 text-accent" />
-                  <div>
-                    <div className="font-semibold">Introduction to {enrollment.program.name}</div>
-                    <div className="text-sm text-muted-foreground">Coming soon</div>
+                {nextClass ? (
+                  <div className="flex items-center gap-3">
+                    <Video className="h-8 w-8 text-accent" />
+                    <div>
+                      <div className="font-semibold">{nextClass.title}</div>
+                      <div className="text-sm text-muted-foreground flex items-center gap-1">
+                        <Calendar className="h-3 w-3" />
+                        {new Date(nextClass.scheduled_at).toLocaleString()}
+                      </div>
+                    </div>
                   </div>
-                </div>
+                ) : (
+                  <p className="text-muted-foreground">No upcoming classes scheduled.</p>
+                )}
               </CardContent>
             </Card>
             <Card>
-              <CardHeader><CardTitle>Upcoming Assignments</CardTitle></CardHeader>
-              <CardContent className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm">Foundation Project</span>
-                  <Badge variant="outline">Coming soon</Badge>
+              <CardHeader><CardTitle>Assignments</CardTitle></CardHeader>
+              <CardContent>
+                <div className="flex items-center gap-3">
+                  <FileText className="h-8 w-8 text-accent" />
+                  <div>
+                    <div className="font-semibold">{assignmentCount} assignment{assignmentCount !== 1 ? "s" : ""}</div>
+                    <div className="text-sm text-muted-foreground">Check your assignments page for details</div>
+                  </div>
                 </div>
               </CardContent>
             </Card>
