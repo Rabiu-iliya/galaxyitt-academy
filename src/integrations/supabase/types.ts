@@ -402,6 +402,42 @@ export type Database = {
         }
         Relationships: []
       }
+      scholarship_applications: {
+        Row: {
+          created_at: string
+          id: string
+          program_id: string
+          reason: string
+          review_notes: string | null
+          reviewed_by: string | null
+          status: Database["public"]["Enums"]["scholarship_status"]
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          program_id: string
+          reason: string
+          review_notes?: string | null
+          reviewed_by?: string | null
+          status?: Database["public"]["Enums"]["scholarship_status"]
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          program_id?: string
+          reason?: string
+          review_notes?: string | null
+          reviewed_by?: string | null
+          status?: Database["public"]["Enums"]["scholarship_status"]
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       submissions: {
         Row: {
           assignment_id: string
@@ -489,6 +525,7 @@ export type Database = {
       cohort_status: "upcoming" | "active" | "completed" | "cancelled"
       enrollment_status: "pending" | "active" | "completed" | "dropped"
       payment_status: "pending" | "completed" | "failed" | "refunded"
+      scholarship_status: "pending" | "approved" | "rejected"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -620,6 +657,7 @@ export const Constants = {
       cohort_status: ["upcoming", "active", "completed", "cancelled"],
       enrollment_status: ["pending", "active", "completed", "dropped"],
       payment_status: ["pending", "completed", "failed", "refunded"],
+      scholarship_status: ["pending", "approved", "rejected"],
     },
   },
 } as const
