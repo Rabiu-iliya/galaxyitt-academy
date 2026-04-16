@@ -2,7 +2,7 @@ import { Link, useLocation, useNavigate, Routes, Route } from "react-router-dom"
 import {
   LayoutDashboard, BookOpen, Layers, Video, FileText,
   FolderKanban, Award, CreditCard, User, LogOut,
-  GraduationCap, Menu,
+  GraduationCap, Menu, Sparkles,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
@@ -19,6 +19,7 @@ import Projects from "./student/Projects";
 import Certificates from "./student/Certificates";
 import Payments from "./student/Payments";
 import Profile from "./student/Profile";
+import Scholarship from "./student/Scholarship";
 
 const sidebarItems = [
   { icon: LayoutDashboard, label: "Dashboard", href: "/student" },
@@ -29,6 +30,7 @@ const sidebarItems = [
   { icon: FolderKanban, label: "Projects", href: "/student/projects" },
   { icon: Award, label: "Certificates", href: "/student/certificates" },
   { icon: CreditCard, label: "Payments", href: "/student/payments" },
+  { icon: Sparkles, label: "Scholarship", href: "/student/scholarship" },
   { icon: User, label: "Profile", href: "/student/profile" },
 ];
 
@@ -103,6 +105,7 @@ const StudentDashboard = () => {
             <Route path="projects" element={<Projects />} />
             <Route path="certificates" element={<Certificates />} />
             <Route path="payments" element={<Payments />} />
+            <Route path="scholarship" element={<Scholarship />} />
             <Route path="profile" element={<Profile />} />
           </Routes>
         </main>
