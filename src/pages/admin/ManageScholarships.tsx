@@ -43,8 +43,8 @@ const ManageScholarships = () => {
 
     if (!apps || apps.length === 0) { setRows([]); setLoading(false); return; }
 
-    const userIds = [...new Set(apps.map((a: any) => a.user_id))];
-    const programIds = [...new Set(apps.map((a: any) => a.program_id))];
+    const userIds = [...new Set(apps.map((a: any) => a.user_id as string))] as string[];
+    const programIds = [...new Set(apps.map((a: any) => a.program_id as string))] as string[];
 
     const [{ data: profiles }, { data: programs }] = await Promise.all([
       supabase.from("profiles").select("user_id, full_name").in("user_id", userIds),
