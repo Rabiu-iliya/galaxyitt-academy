@@ -2,12 +2,13 @@ import { Link, useLocation, useNavigate, Routes, Route } from "react-router-dom"
 import {
   LayoutDashboard, BookOpen, Layers, Video, FileText,
   FolderKanban, Award, CreditCard, User, LogOut,
-  GraduationCap, Menu, Sparkles,
+  GraduationCap, Menu, Sparkles, LifeBuoy,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/contexts/AuthContext";
+import { NotificationBell } from "@/components/NotificationBell";
 import DashboardHome from "./student/DashboardHome";
 import MyProgram from "./student/MyProgram";
 import Modules from "./student/Modules";
@@ -20,6 +21,7 @@ import Certificates from "./student/Certificates";
 import Payments from "./student/Payments";
 import Profile from "./student/Profile";
 import Scholarship from "./student/Scholarship";
+import Support from "./student/Support";
 
 const sidebarItems = [
   { icon: LayoutDashboard, label: "Dashboard", href: "/student" },
@@ -31,6 +33,7 @@ const sidebarItems = [
   { icon: Award, label: "Certificates", href: "/student/certificates" },
   { icon: CreditCard, label: "Payments", href: "/student/payments" },
   { icon: Sparkles, label: "Scholarship", href: "/student/scholarship" },
+  { icon: LifeBuoy, label: "Support", href: "/student/support" },
   { icon: User, label: "Profile", href: "/student/profile" },
 ];
 
@@ -90,7 +93,8 @@ const StudentDashboard = () => {
           <Button variant="ghost" size="icon" className="lg:hidden" onClick={() => setSidebarOpen(true)}>
             <Menu className="h-5 w-5" />
           </Button>
-          <h1 className="text-lg font-semibold">Student Dashboard</h1>
+          <h1 className="text-lg font-semibold flex-1">Student Dashboard</h1>
+          <NotificationBell />
         </header>
 
         <main className="flex-1 p-4 md:p-6">
@@ -106,6 +110,7 @@ const StudentDashboard = () => {
             <Route path="certificates" element={<Certificates />} />
             <Route path="payments" element={<Payments />} />
             <Route path="scholarship" element={<Scholarship />} />
+            <Route path="support" element={<Support />} />
             <Route path="profile" element={<Profile />} />
           </Routes>
         </main>

@@ -55,6 +55,27 @@ export type Database = {
           },
         ]
       }
+      certificates: {
+        Row: {
+          id: string
+          issued_at: string | null
+          program_id: string | null
+          user_id: string | null
+        }
+        Insert: {
+          id?: string
+          issued_at?: string | null
+          program_id?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          id?: string
+          issued_at?: string | null
+          program_id?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       cohorts: {
         Row: {
           created_at: string
@@ -286,6 +307,39 @@ export type Database = {
           },
         ]
       }
+      notifications: {
+        Row: {
+          created_at: string
+          id: string
+          is_read: boolean
+          link: string | null
+          message: string
+          title: string
+          type: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_read?: boolean
+          link?: string | null
+          message: string
+          title: string
+          type?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_read?: boolean
+          link?: string | null
+          message?: string
+          title?: string
+          type?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       payments: {
         Row: {
           amount: number
@@ -402,6 +456,54 @@ export type Database = {
         }
         Relationships: []
       }
+      projects: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          live_url: string | null
+          program_id: string
+          repo_url: string | null
+          review_notes: string | null
+          reviewed_at: string | null
+          reviewed_by: string | null
+          status: Database["public"]["Enums"]["project_status"]
+          student_id: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          live_url?: string | null
+          program_id: string
+          repo_url?: string | null
+          review_notes?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: Database["public"]["Enums"]["project_status"]
+          student_id: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          live_url?: string | null
+          program_id?: string
+          repo_url?: string | null
+          review_notes?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: Database["public"]["Enums"]["project_status"]
+          student_id?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       scholarship_applications: {
         Row: {
           created_at: string
@@ -482,6 +584,45 @@ export type Database = {
           },
         ]
       }
+      support_messages: {
+        Row: {
+          admin_reply: string | null
+          created_at: string
+          id: string
+          message: string
+          replied_at: string | null
+          replied_by: string | null
+          status: string
+          subject: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          admin_reply?: string | null
+          created_at?: string
+          id?: string
+          message: string
+          replied_at?: string | null
+          replied_by?: string | null
+          status?: string
+          subject: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          admin_reply?: string | null
+          created_at?: string
+          id?: string
+          message?: string
+          replied_at?: string | null
+          replied_by?: string | null
+          status?: string
+          subject?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           assigned_by: string | null
@@ -525,6 +666,7 @@ export type Database = {
       cohort_status: "upcoming" | "active" | "completed" | "cancelled"
       enrollment_status: "pending" | "active" | "completed" | "dropped"
       payment_status: "pending" | "completed" | "failed" | "refunded"
+      project_status: "pending" | "approved" | "rejected"
       scholarship_status: "pending" | "approved" | "rejected"
     }
     CompositeTypes: {
@@ -657,6 +799,7 @@ export const Constants = {
       cohort_status: ["upcoming", "active", "completed", "cancelled"],
       enrollment_status: ["pending", "active", "completed", "dropped"],
       payment_status: ["pending", "completed", "failed", "refunded"],
+      project_status: ["pending", "approved", "rejected"],
       scholarship_status: ["pending", "approved", "rejected"],
     },
   },

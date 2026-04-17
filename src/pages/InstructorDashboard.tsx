@@ -1,16 +1,18 @@
 import { Link, useLocation, useNavigate, Routes, Route } from "react-router-dom";
 import {
   LayoutDashboard, Users, BookOpen, Video, FileText,
-  ClipboardCheck, LogOut, GraduationCap, Menu, Layers,
+  ClipboardCheck, LogOut, GraduationCap, Menu, Layers, FolderKanban,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/contexts/AuthContext";
+import { NotificationBell } from "@/components/NotificationBell";
 import InstructorHome from "./instructor/InstructorHome";
 import ManageLiveClasses from "./instructor/ManageLiveClasses";
 import ManageAssignments from "./instructor/ManageAssignments";
 import ViewSubmissions from "./instructor/ViewSubmissions";
+import ReviewProjects from "./admin/ReviewProjects";
 import PlaceholderPage from "./shared/PlaceholderPage";
 
 const sidebarItems = [
@@ -20,6 +22,7 @@ const sidebarItems = [
   { icon: Video, label: "Live Classes", href: "/instructor/live-classes" },
   { icon: FileText, label: "Assignments", href: "/instructor/assignments" },
   { icon: ClipboardCheck, label: "Submissions", href: "/instructor/submissions" },
+  { icon: FolderKanban, label: "Projects", href: "/instructor/projects" },
   { icon: Users, label: "Students", href: "/instructor/students" },
 ];
 
@@ -71,7 +74,8 @@ const InstructorDashboard = () => {
           <Button variant="ghost" size="icon" className="lg:hidden" onClick={() => setSidebarOpen(true)}>
             <Menu className="h-5 w-5" />
           </Button>
-          <h1 className="text-lg font-semibold">Instructor Dashboard</h1>
+          <h1 className="text-lg font-semibold flex-1">Instructor Dashboard</h1>
+          <NotificationBell />
         </header>
 
         <main className="flex-1 p-4 md:p-6">
@@ -82,6 +86,7 @@ const InstructorDashboard = () => {
             <Route path="live-classes" element={<ManageLiveClasses />} />
             <Route path="assignments" element={<ManageAssignments />} />
             <Route path="submissions" element={<ViewSubmissions />} />
+            <Route path="projects" element={<ReviewProjects />} />
             <Route path="students" element={<PlaceholderPage title="My Students" />} />
           </Routes>
         </main>

@@ -1,0 +1,1 @@
+DROP POLICY IF EXISTS "System can insert certificates" ON public.certificates;
