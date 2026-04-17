@@ -4,6 +4,7 @@ import { Award, Loader2, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
+import { generateCertificatePDF } from "@/lib/certificatePdf";
 
 interface CertRow {
   id: string;
@@ -69,8 +70,16 @@ const Certificates = () => {
                     Issued on {c.issued_at ? new Date(c.issued_at).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" }) : "—"}
                   </p>
                   <p className="text-[10px] text-muted-foreground/60 font-mono">ID: {c.id.slice(0, 8).toUpperCase()}</p>
-                  <Button variant="outline" className="mt-4 gap-2" onClick={() => window.print()}>
-                    <Download className="h-4 w-4" />Print / Save
+                  <Button
+                    className="mt-4 gap-2 bg-accent text-accent-foreground hover:bg-accent/90"
+                    onClick={() => generateCertificatePDF({
+                      studentName: profile?.full_name || "Student",
+                      programName: c.programs?.name || "—",
+                      issuedAt: c.issued_at ? new Date(c.issued_at).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" }) : new Date().toLocaleDateString(),
+                      certificateId: c.id.slice(0, 8),
+                    })}
+                  >
+                    <Download className="h-4 w-4" />Download PDF
                   </Button>
                 </div>
               </CardContent>
