@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from "@/components/ui/dialog";
-import { FolderKanban, Plus, ExternalLink, Github, Loader2, CheckCircle2, XCircle, Clock } from "lucide-react";
+import { FolderKanban, Plus, ExternalLink, Github as GithubIcon, Loader2, CheckCircle2, XCircle, Clock } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { useEnrollment } from "@/hooks/useEnrollment";
