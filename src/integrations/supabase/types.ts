@@ -55,6 +55,27 @@ export type Database = {
           },
         ]
       }
+      certificates: {
+        Row: {
+          id: string
+          issued_at: string | null
+          program_id: string | null
+          user_id: string | null
+        }
+        Insert: {
+          id?: string
+          issued_at?: string | null
+          program_id?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          id?: string
+          issued_at?: string | null
+          program_id?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       cohorts: {
         Row: {
           created_at: string
