@@ -2,18 +2,21 @@ import { Link, useLocation, useNavigate, Routes, Route } from "react-router-dom"
 import {
   LayoutDashboard, BookOpen, Users, UserCheck, CreditCard,
   BarChart3, Award, Megaphone, Settings, LogOut,
-  GraduationCap, Menu, Layers, Sparkles,
+  GraduationCap, Menu, Layers, Sparkles, FolderKanban, LifeBuoy,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/contexts/AuthContext";
+import { NotificationBell } from "@/components/NotificationBell";
 import AdminHome from "./admin/AdminHome";
 import ManagePrograms from "./admin/ManagePrograms";
 import ManageCohorts from "./admin/ManageCohorts";
 import ManageStudents from "./admin/ManageStudents";
 import AdminPayments from "./admin/AdminPayments";
 import ManageScholarships from "./admin/ManageScholarships";
+import ReviewProjects from "./admin/ReviewProjects";
+import ManageSupport from "./admin/ManageSupport";
 import PlaceholderPage from "./shared/PlaceholderPage";
 
 const sidebarItems = [
@@ -22,8 +25,10 @@ const sidebarItems = [
   { icon: Layers, label: "Cohorts", href: "/admin/cohorts" },
   { icon: Users, label: "Students", href: "/admin/students" },
   { icon: UserCheck, label: "Instructors", href: "/admin/instructors" },
+  { icon: FolderKanban, label: "Projects", href: "/admin/projects" },
   { icon: CreditCard, label: "Payments", href: "/admin/payments" },
   { icon: Sparkles, label: "Scholarships", href: "/admin/scholarships" },
+  { icon: LifeBuoy, label: "Support", href: "/admin/support" },
   { icon: BarChart3, label: "Analytics", href: "/admin/analytics" },
   { icon: Award, label: "Certificates", href: "/admin/certificates" },
   { icon: Megaphone, label: "Announcements", href: "/admin/announcements" },
@@ -78,7 +83,8 @@ const AdminDashboard = () => {
           <Button variant="ghost" size="icon" className="lg:hidden" onClick={() => setSidebarOpen(true)}>
             <Menu className="h-5 w-5" />
           </Button>
-          <h1 className="text-lg font-semibold">Admin Dashboard</h1>
+          <h1 className="text-lg font-semibold flex-1">Admin Dashboard</h1>
+          <NotificationBell />
         </header>
 
         <main className="flex-1 p-4 md:p-6">
@@ -88,8 +94,10 @@ const AdminDashboard = () => {
             <Route path="cohorts" element={<ManageCohorts />} />
             <Route path="students" element={<ManageStudents />} />
             <Route path="instructors" element={<PlaceholderPage title="Manage Instructors" />} />
+            <Route path="projects" element={<ReviewProjects />} />
             <Route path="payments" element={<AdminPayments />} />
             <Route path="scholarships" element={<ManageScholarships />} />
+            <Route path="support" element={<ManageSupport />} />
             <Route path="analytics" element={<PlaceholderPage title="Analytics" />} />
             <Route path="certificates" element={<PlaceholderPage title="Certificates" />} />
             <Route path="announcements" element={<PlaceholderPage title="Announcements" />} />
