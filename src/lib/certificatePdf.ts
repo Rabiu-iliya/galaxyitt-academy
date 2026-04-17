@@ -72,6 +72,8 @@ export function generateCertificatePDF(data: CertData) {
   doc.setFontSize(10);
   doc.setTextColor(...MUTED);
   doc.text("CERTIFICATE OF COMPLETION", cx, 75, { align: "center", charSpace: 3 });
+  // Reset character spacing so it doesn't leak into subsequent text calls
+  doc.setCharSpace(0);
 
   // "This is to certify that"
   doc.setFontSize(12);
