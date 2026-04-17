@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
-import { FolderKanban, Github as GithubIcon, ExternalLink, Loader2, CheckCircle2, XCircle } from "lucide-react";
+import { FolderKanban, Code2, ExternalLink, Loader2, CheckCircle2, XCircle } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "sonner";
@@ -86,7 +86,7 @@ const ReviewProjects = () => {
               <CardContent className="space-y-3">
                 {p.description && <p className="text-sm">{p.description}</p>}
                 <div className="flex flex-wrap gap-2">
-                  {p.repo_url && <a href={p.repo_url} target="_blank" rel="noreferrer"><Button variant="outline" size="sm" className="gap-2"><Github className="h-4 w-4" />Repo</Button></a>}
+                  {p.repo_url && <a href={p.repo_url} target="_blank" rel="noreferrer"><Button variant="outline" size="sm" className="gap-2"><Code2 className="h-4 w-4" />Repo</Button></a>}
                   {p.live_url && <a href={p.live_url} target="_blank" rel="noreferrer"><Button variant="outline" size="sm" className="gap-2"><ExternalLink className="h-4 w-4" />Live Demo</Button></a>}
                 </div>
                 {p.status === "pending" && (

@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from "@/components/ui/dialog";
-import { FolderKanban, Plus, ExternalLink, Github as GithubIcon, Loader2, CheckCircle2, XCircle, Clock } from "lucide-react";
+import { FolderKanban, Plus, ExternalLink, Code2, Loader2, CheckCircle2, XCircle, Clock } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { useEnrollment } from "@/hooks/useEnrollment";
@@ -154,7 +154,7 @@ const Projects = () => {
                 </CardHeader>
                 <CardContent className="space-y-3">
                   <div className="flex flex-wrap gap-2">
-                    {p.repo_url && <a href={p.repo_url} target="_blank" rel="noreferrer"><Button variant="outline" size="sm" className="gap-2"><Github className="h-4 w-4" />Repo</Button></a>}
+                    {p.repo_url && <a href={p.repo_url} target="_blank" rel="noreferrer"><Button variant="outline" size="sm" className="gap-2"><Code2 className="h-4 w-4" />Repo</Button></a>}
                     {p.live_url && <a href={p.live_url} target="_blank" rel="noreferrer"><Button variant="outline" size="sm" className="gap-2"><ExternalLink className="h-4 w-4" />Live</Button></a>}
                   </div>
                   {p.review_notes && (
