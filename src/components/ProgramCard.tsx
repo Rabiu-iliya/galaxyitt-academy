@@ -10,8 +10,9 @@ const iconMap: Record<string, React.ElementType> = {
   Link: LinkIcon, Gamepad2, Palette, Network, Database, Cpu,
 };
 
-export function ProgramCard({ program }: { program: Program }) {
-  const Icon = iconMap[program.icon] || Code2;
+export function ProgramCard({ program }: { program: Program | any }) {
+  const Icon = iconMap[program.icon || "Code2"] || Code2;
+  const highlights: string[] = program.highlights || [];
 
   return (
     <Card className="flex flex-col transition-all hover:shadow-lg hover:-translate-y-1">
@@ -30,7 +31,7 @@ export function ProgramCard({ program }: { program: Program }) {
       <CardContent className="flex-1">
         <p className="mb-4 text-sm text-muted-foreground line-clamp-2">{program.description}</p>
         <div className="flex flex-wrap gap-1">
-          {program.highlights.slice(0, 3).map((h) => (
+          {highlights.slice(0, 3).map((h) => (
             <Badge key={h} variant="outline" className="text-xs font-normal">
               {h}
             </Badge>
