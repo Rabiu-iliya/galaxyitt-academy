@@ -36,7 +36,7 @@ const Certificates = () => {
       const [certsRes, sigRes] = await Promise.all([
         supabase
           .from("certificates")
-          .select("id, issued_at, program_id, user_id, programs(name)")
+          .select("id, issued_at, program_id, user_id")
           .eq("user_id", user.id)
           .order("issued_at", { ascending: false }),
         supabase
@@ -46,7 +46,15 @@ const Certificates = () => {
           .limit(1)
           .maybeSingle(),
       ]);
-      const rows = (certsRes.data as CertRow[]) || [];
+      const baseRows = (certsRes.data as Omit<CertRow, "programs">[]) || [];
+      // Manually fetch program names (no FK relation defined)
+      const programIds = Array.from(new Set(baseRows.map((r) => r.program_id).filter(Boolean)));
+      let programMap: Record<string, string> = {};
+      if (programIds.length > 0) {
+        const { data: progs } = await supabase.from("programs").select("id, name").in("id", programIds);
+        programMap = Object.fromEntries((progs || []).map((p: any) => [p.id, p.name]));
+      }
+      const rows: CertRow[] = baseRows.map((r) => ({ ...r, programs: { name: programMap[r.program_id] || "—" } }));
       setCerts(rows);
       setSignature((sigRes.data as Signature | null) ?? null);
 
