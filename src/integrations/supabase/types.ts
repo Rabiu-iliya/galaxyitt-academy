@@ -540,6 +540,33 @@ export type Database = {
         }
         Relationships: []
       }
+      signatures: {
+        Row: {
+          created_at: string
+          id: string
+          image_url: string | null
+          name: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          image_url?: string | null
+          name: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          image_url?: string | null
+          name?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       submissions: {
         Row: {
           assignment_id: string
@@ -660,6 +687,15 @@ export type Database = {
         Returns: boolean
       }
       is_admin_or_super_admin: { Args: { _user_id: string }; Returns: boolean }
+      verify_certificate: {
+        Args: { cert_id: string }
+        Returns: {
+          certificate_id: string
+          issued_at: string
+          program_name: string
+          student_name: string
+        }[]
+      }
     }
     Enums: {
       app_role: "super_admin" | "admin" | "instructor" | "student"

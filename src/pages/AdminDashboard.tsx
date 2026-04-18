@@ -2,7 +2,7 @@ import { Link, useLocation, useNavigate, Routes, Route } from "react-router-dom"
 import {
   LayoutDashboard, BookOpen, Users, UserCheck, CreditCard,
   BarChart3, Award, Megaphone, Settings, LogOut,
-  GraduationCap, Menu, Layers, Sparkles, FolderKanban, LifeBuoy,
+  GraduationCap, Menu, Layers, Sparkles, FolderKanban, LifeBuoy, PenLine,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
@@ -17,6 +17,7 @@ import AdminPayments from "./admin/AdminPayments";
 import ManageScholarships from "./admin/ManageScholarships";
 import ReviewProjects from "./admin/ReviewProjects";
 import ManageSupport from "./admin/ManageSupport";
+import ManageSignatures from "./admin/ManageSignatures";
 import PlaceholderPage from "./shared/PlaceholderPage";
 
 const sidebarItems = [
@@ -31,6 +32,7 @@ const sidebarItems = [
   { icon: LifeBuoy, label: "Support", href: "/admin/support" },
   { icon: BarChart3, label: "Analytics", href: "/admin/analytics" },
   { icon: Award, label: "Certificates", href: "/admin/certificates" },
+  { icon: PenLine, label: "Signatures", href: "/admin/signatures" },
   { icon: Megaphone, label: "Announcements", href: "/admin/announcements" },
   { icon: Settings, label: "Settings", href: "/admin/settings" },
 ];
@@ -100,6 +102,7 @@ const AdminDashboard = () => {
             <Route path="support" element={<ManageSupport />} />
             <Route path="analytics" element={<PlaceholderPage title="Analytics" />} />
             <Route path="certificates" element={<PlaceholderPage title="Certificates" />} />
+            <Route path="signatures" element={<ManageSignatures />} />
             <Route path="announcements" element={<PlaceholderPage title="Announcements" />} />
             <Route path="settings" element={<PlaceholderPage title="Settings" />} />
           </Routes>
