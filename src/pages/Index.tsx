@@ -1,17 +1,38 @@
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { ProgramCard } from "@/components/ProgramCard";
-import { programs, formatPrice } from "@/lib/programs";
+import { supabase } from "@/integrations/supabase/client";
+import { formatPrice } from "@/lib/programs";
 import {
   GraduationCap, Users, Video, Award, ArrowRight,
-  CheckCircle2, Star, Quote,
+  CheckCircle2, Star, Quote, Sparkles,
 } from "lucide-react";
 
+interface DbProgram {
+  id: string;
+  name: string;
+  slug: string;
+  description: string;
+  duration: string;
+  price: number;
+  icon: string | null;
+  highlights: string[] | null;
+}
+
 const Index = () => {
+  const [programs, setPrograms] = useState<DbProgram[]>([]);
+
+  useEffect(() => {
+    supabase.from("programs").select("*").order("name").then(({ data }) => {
+      setPrograms((data as DbProgram[]) || []);
+    });
+  }, []);
+
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
