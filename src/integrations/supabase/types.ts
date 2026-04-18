@@ -540,6 +540,33 @@ export type Database = {
         }
         Relationships: []
       }
+      signatures: {
+        Row: {
+          created_at: string
+          id: string
+          image_url: string | null
+          name: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          image_url?: string | null
+          name: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          image_url?: string | null
+          name?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       submissions: {
         Row: {
           assignment_id: string
@@ -649,7 +676,21 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      profiles_public: {
+        Row: {
+          full_name: string | null
+          user_id: string | null
+        }
+        Insert: {
+          full_name?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          full_name?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       has_role: {
