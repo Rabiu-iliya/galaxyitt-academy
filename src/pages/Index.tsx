@@ -88,17 +88,54 @@ const Index = () => {
               Choose from {programs.length || "our"} industry-aligned programs designed to take you from beginner to job-ready.
             </p>
           </div>
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {programs.slice(0, 8).map((p) => (
-              <ProgramCard key={p.id} program={p} />
-            ))}
-          </div>
-          <div className="mt-8 text-center">
-            <Link to="/programs">
-              <Button variant="outline" size="lg">
-                View All 14 Programs <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
+          {programs.length === 0 ? (
+            <div className="text-center text-muted-foreground py-12">No programs available yet. Check back soon.</div>
+          ) : (
+            <>
+              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                {programs.slice(0, 8).map((p) => (
+                  <ProgramCard key={p.id} program={p} />
+                ))}
+              </div>
+              <div className="mt-8 text-center">
+                <Link to="/programs">
+                  <Button variant="outline" size="lg">
+                    View All {programs.length} Programs <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </Link>
+              </div>
+            </>
+          )}
+        </div>
+      </section>
+
+      {/* Scholarship — public CTA */}
+      <section className="py-20 bg-gradient-to-br from-accent/10 via-background to-accent/5" id="scholarship">
+        <div className="container mx-auto px-4">
+          <div className="mx-auto max-w-3xl text-center">
+            <Badge className="mb-4 bg-accent/20 text-accent border-accent/30 hover:bg-accent/30">
+              <Sparkles className="mr-1 h-3 w-3" /> Scholarship Program
+            </Badge>
+            <h2 className="text-3xl font-bold md:text-4xl">Apply for Scholarship</h2>
+            <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
+              Get access to premium tech programs through our scholarship opportunities.
+              We support driven learners from underrepresented backgrounds with full and partial program funding.
+            </p>
+            <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+              <Link to="/register">
+                <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 px-8">
+                  Apply for Scholarship <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </Link>
+              <Link to="/login">
+                <Button size="lg" variant="outline" className="px-8">
+                  I have an account
+                </Button>
+              </Link>
+            </div>
+            <p className="mt-4 text-xs text-muted-foreground">
+              Already enrolled? Submit your scholarship application from your student dashboard.
+            </p>
           </div>
         </div>
       </section>
