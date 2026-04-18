@@ -676,21 +676,7 @@ export type Database = {
       }
     }
     Views: {
-      profiles_public: {
-        Row: {
-          full_name: string | null
-          user_id: string | null
-        }
-        Insert: {
-          full_name?: string | null
-          user_id?: string | null
-        }
-        Update: {
-          full_name?: string | null
-          user_id?: string | null
-        }
-        Relationships: []
-      }
+      [_ in never]: never
     }
     Functions: {
       has_role: {
@@ -701,6 +687,15 @@ export type Database = {
         Returns: boolean
       }
       is_admin_or_super_admin: { Args: { _user_id: string }; Returns: boolean }
+      verify_certificate: {
+        Args: { cert_id: string }
+        Returns: {
+          certificate_id: string
+          issued_at: string
+          program_name: string
+          student_name: string
+        }[]
+      }
     }
     Enums: {
       app_role: "super_admin" | "admin" | "instructor" | "student"
