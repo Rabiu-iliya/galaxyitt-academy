@@ -1,7 +1,22 @@
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { GraduationCap, Mail, Phone, MapPin } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+
+interface FooterProgram { id: string; name: string; slug: string; }
 
 export function Footer() {
+  const [programs, setPrograms] = useState<FooterProgram[]>([]);
+
+  useEffect(() => {
+    supabase
+      .from("programs")
+      .select("id, name, slug")
+      .order("name")
+      .limit(6)
+      .then(({ data }) => setPrograms(data || []));
+  }, []);
+
   return (
     <footer className="border-t bg-primary text-primary-foreground">
       <div className="container mx-auto px-4 py-12">
@@ -23,6 +38,7 @@ export function Footer() {
             <div className="flex flex-col gap-2 text-sm text-primary-foreground/70">
               <Link to="/programs" className="hover:text-primary-foreground">Programs</Link>
               <Link to="/#about" className="hover:text-primary-foreground">About Us</Link>
+              <Link to="/#scholarship" className="hover:text-primary-foreground">Scholarship</Link>
               <Link to="/#pricing" className="hover:text-primary-foreground">Pricing</Link>
               <Link to="/register" className="hover:text-primary-foreground">Apply Now</Link>
             </div>
@@ -31,11 +47,15 @@ export function Footer() {
           <div>
             <h4 className="mb-4 font-semibold text-accent">Programs</h4>
             <div className="flex flex-col gap-2 text-sm text-primary-foreground/70">
-              <span>AI & Machine Learning</span>
-              <span>Software Engineering</span>
-              <span>Cybersecurity</span>
-              <span>Data Science</span>
-              <span>Cloud Computing</span>
+              {programs.length === 0 ? (
+                <span className="text-primary-foreground/50">Loading…</span>
+              ) : (
+                programs.map((p) => (
+                  <Link key={p.id} to={`/programs/${p.slug}`} className="hover:text-primary-foreground">
+                    {p.name}
+                  </Link>
+                ))
+              )}
             </div>
           </div>
 
