@@ -73,7 +73,7 @@ const Index = () => {
             <div className="flex items-center gap-2"><Users className="h-5 w-5 text-accent" /><span className="text-sm">5,000+ Graduates</span></div>
             <div className="flex items-center gap-2"><Video className="h-5 w-5 text-accent" /><span className="text-sm">Live Classes</span></div>
             <div className="flex items-center gap-2"><Award className="h-5 w-5 text-accent" /><span className="text-sm">Certified Programs</span></div>
-            <div className="flex items-center gap-2"><GraduationCap className="h-5 w-5 text-accent" /><span className="text-sm">14 Programs</span></div>
+            <div className="flex items-center gap-2"><GraduationCap className="h-5 w-5 text-accent" /><span className="text-sm">{programs.length || "—"} Programs</span></div>
           </div>
         </div>
       </section>
@@ -85,7 +85,7 @@ const Index = () => {
             <Badge variant="outline" className="mb-4">Our Programs</Badge>
             <h2 className="text-3xl font-bold md:text-4xl">World-Class Technology Programs</h2>
             <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
-              Choose from 14 industry-aligned programs designed to take you from beginner to job-ready in 12 weeks.
+              Choose from {programs.length || "our"} industry-aligned programs designed to take you from beginner to job-ready.
             </p>
           </div>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
