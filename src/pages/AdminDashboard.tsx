@@ -1,4 +1,4 @@
-import { Link, useLocation, useNavigate, Routes, Route } from "react-router-dom";
+import { Link, useLocation, useNavigate, Routes,           Route } from "react-router-dom";
 import {
   LayoutDashboard, BookOpen, Users, UserCheck, CreditCard,
   BarChart3, Award, Megaphone, Settings, LogOut,
@@ -19,30 +19,11 @@ import ReviewProjects from "./admin/ReviewProjects";
 import ManageSupport from "./admin/ManageSupport";
 import ManageSignatures from "./admin/ManageSignatures";
 import PlaceholderPage from "./shared/PlaceholderPage";
-import { Routes, Route } from "react-router-dom";
 import AdminInstructors from "./AdminInstructors";
 import AdminAnalytics from "./AdminAnalytics";
 import AdminSettings from "./AdminSettings";
 import AdminCertificates from "./AdminCertificates";
 import AdminAnnouncements from "./AdminAnnouncements";
-
-export default function AdminDashboard() {
-  return (
-    <div className="flex">
-      {/* Sidebar here */}
-
-      <div className="flex-1 p-4">
-        <Routes>
-          <Route path="instructors" element={<AdminInstructors />} />
-          <Route path="analytics" element={<AdminAnalytics />} />
-          <Route path="settings" element={<AdminSettings />} />
-          <Route path="certificates" element={<AdminCertificates />} />
-          <Route path="announcements" element={<AdminAnnouncements />} />
-        </Routes>
-      </div>
-    </div>
-  );
-}
 
 const sidebarItems = [
   { icon: LayoutDashboard, label: "Dashboard", href: "/admin" },
@@ -119,17 +100,20 @@ const AdminDashboard = () => {
             <Route path="programs" element={<ManagePrograms />} />
             <Route path="cohorts" element={<ManageCohorts />} />
             <Route path="students" element={<ManageStudents />} />
-            <Route path="instructors" element={<PlaceholderPage title="Manage Instructors" />} />
+
+  /* ✅ REPLACE placeholder with real page */
+            <Route path="instructors" element={<AdminInstructors />} />
             <Route path="projects" element={<ReviewProjects />} />
             <Route path="payments" element={<AdminPayments />} />
             <Route path="scholarships" element={<ManageScholarships />} />
             <Route path="support" element={<ManageSupport />} />
-            <Route path="analytics" element={<PlaceholderPage title="Analytics" />} />
-            <Route path="certificates" element={<PlaceholderPage title="Certificates" />} />
-            <Route path="signatures" element={<ManageSignatures />} />
-            <Route path="announcements" element={<PlaceholderPage title="Announcements" />} />
-            <Route path="settings" element={<PlaceholderPage title="Settings" />} />
-          </Routes>
+
+  /* ✅ NEW WORKING PAGES */
+            <Route path="analytics" element={<AdminAnalytics />} />
+            <Route path="certificates" element={<AdminCertificates />} />
+            <Route path="announcements" element={<AdminAnnouncements />} />
+            <Route path="settings" element={<AdminSettings />} />
+</Routes>
         </main>
       </div>
     </div>
