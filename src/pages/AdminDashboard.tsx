@@ -19,6 +19,30 @@ import ReviewProjects from "./admin/ReviewProjects";
 import ManageSupport from "./admin/ManageSupport";
 import ManageSignatures from "./admin/ManageSignatures";
 import PlaceholderPage from "./shared/PlaceholderPage";
+import { Routes, Route } from "react-router-dom";
+import AdminInstructors from "./AdminInstructors";
+import AdminAnalytics from "./AdminAnalytics";
+import AdminSettings from "./AdminSettings";
+import AdminCertificates from "./AdminCertificates";
+import AdminAnnouncements from "./AdminAnnouncements";
+
+export default function AdminDashboard() {
+  return (
+    <div className="flex">
+      {/* Sidebar here */}
+
+      <div className="flex-1 p-4">
+        <Routes>
+          <Route path="instructors" element={<AdminInstructors />} />
+          <Route path="analytics" element={<AdminAnalytics />} />
+          <Route path="settings" element={<AdminSettings />} />
+          <Route path="certificates" element={<AdminCertificates />} />
+          <Route path="announcements" element={<AdminAnnouncements />} />
+        </Routes>
+      </div>
+    </div>
+  );
+}
 
 const sidebarItems = [
   { icon: LayoutDashboard, label: "Dashboard", href: "/admin" },
