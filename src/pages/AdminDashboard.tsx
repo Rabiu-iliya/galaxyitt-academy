@@ -19,11 +19,11 @@ import ReviewProjects from "./admin/ReviewProjects";
 import ManageSupport from "./admin/ManageSupport";
 import ManageSignatures from "./admin/ManageSignatures";
 import PlaceholderPage from "./shared/PlaceholderPage";
-import AdminInstructors from "./AdminInstructors";
-import AdminAnalytics from "./AdminAnalytics";
-import AdminSettings from "./AdminSettings";
-import AdminCertificates from "./AdminCertificates";
-import AdminAnnouncements from "./AdminAnnouncements";
+import AdminInstructors from "./admin/AdminInstructors";
+import AdminAnalytics from "./admin/AdminAnalytics";
+import AdminSettings from "./admin/AdminSettings";
+import AdminCertificates from "./admin/AdminCertificates";
+import AdminAnnouncements from "./admin/AdminAnnouncements";
 
 const sidebarItems = [
   { icon: LayoutDashboard, label: "Dashboard", href: "/admin" },
