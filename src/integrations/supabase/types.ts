@@ -507,7 +507,10 @@ export type Database = {
       scholarship_applications: {
         Row: {
           created_at: string
+          email: string | null
+          full_name: string | null
           id: string
+          phone: string | null
           program_id: string
           reason: string
           review_notes: string | null
@@ -518,7 +521,10 @@ export type Database = {
         }
         Insert: {
           created_at?: string
+          email?: string | null
+          full_name?: string | null
           id?: string
+          phone?: string | null
           program_id: string
           reason: string
           review_notes?: string | null
@@ -529,7 +535,10 @@ export type Database = {
         }
         Update: {
           created_at?: string
+          email?: string | null
+          full_name?: string | null
           id?: string
+          phone?: string | null
           program_id?: string
           reason?: string
           review_notes?: string | null

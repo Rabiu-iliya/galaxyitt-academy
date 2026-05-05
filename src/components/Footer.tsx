@@ -64,15 +64,15 @@ export function Footer() {
             <div className="flex flex-col gap-3 text-sm text-primary-foreground/70">
               <div className="flex items-center gap-2">
                 <Mail className="h-4 w-4" />
-                <span>info@galaxyitt.com</span>
+                <span>info@galaxyitt.com.ng</span>
               </div>
               <div className="flex items-center gap-2">
                 <Phone className="h-4 w-4" />
-                <span>+234 800 123 4567</span>
+                <span>08039606006</span>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-start gap-2">
                 <MapPin className="h-4 w-4" />
-                <span>Lagos, Nigeria</span>
+                <span>No. 2 Kiyawa Road, Dutse, Jigawa State</span>
               </div>
             </div>
           </div>

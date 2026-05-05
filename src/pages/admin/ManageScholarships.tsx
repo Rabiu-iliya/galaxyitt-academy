@@ -20,6 +20,9 @@ interface AppRow {
   created_at: string;
   student_name: string;
   program_name: string;
+  full_name: string | null;
+  email: string | null;
+  phone: string | null;
 }
 
 const statusVariant = (s: string) =>
@@ -32,13 +35,15 @@ const ManageScholarships = () => {
   const [rows, setRows] = useState<AppRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<string>("all");
+  const [programFilter, setProgramFilter] = useState<string>("all");
+  const [allPrograms, setAllPrograms] = useState<{ id: string; name: string }[]>([]);
   const [notesById, setNotesById] = useState<Record<string, string>>({});
 
   const fetchData = async () => {
     setLoading(true);
     const { data: apps } = await (supabase as any)
       .from("scholarship_applications")
-      .select("id, user_id, program_id, reason, status, review_notes, created_at")
+      .select("id, user_id, program_id, reason, status, review_notes, created_at, full_name, email, phone")
       .order("created_at", { ascending: false });
 
     if (!apps || apps.length === 0) { setRows([]); setLoading(false); return; }
@@ -59,6 +64,7 @@ const ManageScholarships = () => {
       student_name: pMap.get(a.user_id) || "Unknown",
       program_name: prMap.get(a.program_id) || "Unknown",
     })));
+    setAllPrograms((programs as any) || []);
     setLoading(false);
   };
 
@@ -100,7 +106,10 @@ const ManageScholarships = () => {
     fetchData();
   };
 
-  const filtered = filter === "all" ? rows : rows.filter(r => r.status === filter);
+  const filtered = rows.filter(r =>
+    (filter === "all" || r.status === filter) &&
+    (programFilter === "all" || r.program_id === programFilter)
+  );
 
   if (loading) return <div className="flex items-center justify-center p-12"><div className="h-8 w-8 animate-spin rounded-full border-4 border-accent border-t-transparent" /></div>;
 
@@ -108,15 +117,24 @@ const ManageScholarships = () => {
     <div className="space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-3">
         <h2 className="text-2xl font-bold flex items-center gap-2"><Award className="h-6 w-6 text-accent" /> Scholarship Applications</h2>
-        <Select value={filter} onValueChange={setFilter}>
-          <SelectTrigger className="w-[180px]"><SelectValue /></SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All</SelectItem>
-            <SelectItem value="pending">Pending</SelectItem>
-            <SelectItem value="approved">Approved</SelectItem>
-            <SelectItem value="rejected">Rejected</SelectItem>
-          </SelectContent>
-        </Select>
+        <div className="flex flex-wrap gap-2">
+          <Select value={filter} onValueChange={setFilter}>
+            <SelectTrigger className="w-[160px]"><SelectValue /></SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All statuses</SelectItem>
+              <SelectItem value="pending">Pending</SelectItem>
+              <SelectItem value="approved">Approved</SelectItem>
+              <SelectItem value="rejected">Rejected</SelectItem>
+            </SelectContent>
+          </Select>
+          <Select value={programFilter} onValueChange={setProgramFilter}>
+            <SelectTrigger className="w-[200px]"><SelectValue placeholder="Program" /></SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All programs</SelectItem>
+              {allPrograms.map(p => <SelectItem key={p.id} value={p.id}>{p.name}</SelectItem>)}
+            </SelectContent>
+          </Select>
+        </div>
       </div>
 
       {filtered.length === 0 ? (
@@ -137,7 +155,14 @@ const ManageScholarships = () => {
               <TableBody>
                 {filtered.map(r => (
                   <TableRow key={r.id}>
-                    <TableCell className="font-medium">{r.student_name}</TableCell>
+                    <TableCell className="font-medium">
+                      <div>{r.full_name || r.student_name}</div>
+                      {(r.email || r.phone) && (
+                        <div className="text-xs text-muted-foreground">
+                          {r.email}{r.email && r.phone ? " • " : ""}{r.phone}
+                        </div>
+                      )}
+                    </TableCell>
                     <TableCell>{r.program_name}</TableCell>
                     <TableCell className="max-w-xs">
                       <p className="text-sm line-clamp-3">{r.reason}</p>

@@ -39,21 +39,24 @@ const Index = () => {
 
       {/* Hero */}
       <section className="relative overflow-hidden bg-primary py-20 md:py-32">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute inset-0" style={{
-            backgroundImage: "radial-gradient(circle at 25% 25%, hsl(41 56% 55% / 0.3) 0%, transparent 50%), radial-gradient(circle at 75% 75%, hsl(213 55% 34% / 0.3) 0%, transparent 50%)"
-          }} />
-        </div>
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle at 25% 25%, hsl(41 56% 55% / 0.25) 0%, transparent 50%), radial-gradient(circle at 75% 75%, hsl(213 55% 34% / 0.4) 0%, transparent 50%)",
+          }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 to-black/60" />
         <div className="container relative mx-auto px-4 text-center">
           <Badge className="mb-6 bg-accent/20 text-accent hover:bg-accent/30 border-accent/30">
             Now Enrolling — Cohort 2026
           </Badge>
-          <h1 className="mx-auto max-w-4xl text-4xl font-bold tracking-tight text-primary-foreground md:text-6xl">
+          <h1 className="mx-auto max-w-4xl text-4xl font-bold tracking-tight text-white md:text-6xl">
             Launch Your Tech Career at{" "}
             <span className="text-accent">GalaxyITT</span>{" "}
             Technology Academy
           </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-lg text-primary-foreground/80">
+          <p className="mx-auto mt-6 max-w-2xl text-lg text-white/80">
             Premium cohort-based programs in AI, Cybersecurity, Software Engineering, and more.
             Learn from industry experts through live classes, hands-on projects, and structured mentorship.
           </p>
@@ -69,7 +72,7 @@ const Index = () => {
               </Button>
             </Link>
           </div>
-          <div className="mt-12 flex flex-wrap items-center justify-center gap-8 text-primary-foreground/70">
+          <div className="mt-12 flex flex-wrap items-center justify-center gap-8 text-white/70">
             <div className="flex items-center gap-2"><Users className="h-5 w-5 text-accent" /><span className="text-sm">5,000+ Graduates</span></div>
             <div className="flex items-center gap-2"><Video className="h-5 w-5 text-accent" /><span className="text-sm">Live Classes</span></div>
             <div className="flex items-center gap-2"><Award className="h-5 w-5 text-accent" /><span className="text-sm">Certified Programs</span></div>
