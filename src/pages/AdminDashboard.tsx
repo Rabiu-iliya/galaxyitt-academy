@@ -1,4 +1,4 @@
-import { Link, useLocation, useNavigate, Routes,           Route } from "react-router-dom";
+import { Link, useLocation, useNavigate, Routes, Route } from "react-router-dom";
 import {
   LayoutDashboard, BookOpen, Users, UserCheck, CreditCard,
   BarChart3, Award, Megaphone, Settings, LogOut,
@@ -18,7 +18,6 @@ import ManageScholarships from "./admin/ManageScholarships";
 import ReviewProjects from "./admin/ReviewProjects";
 import ManageSupport from "./admin/ManageSupport";
 import ManageSignatures from "./admin/ManageSignatures";
-import PlaceholderPage from "./shared/PlaceholderPage";
 import AdminInstructors from "./admin/AdminInstructors";
 import AdminAnalytics from "./admin/AdminAnalytics";
 import AdminSettings from "./admin/AdminSettings";
@@ -100,20 +99,17 @@ const AdminDashboard = () => {
             <Route path="programs" element={<ManagePrograms />} />
             <Route path="cohorts" element={<ManageCohorts />} />
             <Route path="students" element={<ManageStudents />} />
-
-  /* ✅ REPLACE placeholder with real page */
             <Route path="instructors" element={<AdminInstructors />} />
             <Route path="projects" element={<ReviewProjects />} />
             <Route path="payments" element={<AdminPayments />} />
             <Route path="scholarships" element={<ManageScholarships />} />
             <Route path="support" element={<ManageSupport />} />
-
-  /* ✅ NEW WORKING PAGES */
             <Route path="analytics" element={<AdminAnalytics />} />
             <Route path="certificates" element={<AdminCertificates />} />
+            <Route path="signatures" element={<ManageSignatures />} />
             <Route path="announcements" element={<AdminAnnouncements />} />
             <Route path="settings" element={<AdminSettings />} />
-</Routes>
+          </Routes>
         </main>
       </div>
     </div>
