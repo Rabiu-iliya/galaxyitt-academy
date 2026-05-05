@@ -13,7 +13,9 @@ import ManageLiveClasses from "./instructor/ManageLiveClasses";
 import ManageAssignments from "./instructor/ManageAssignments";
 import ViewSubmissions from "./instructor/ViewSubmissions";
 import ReviewProjects from "./admin/ReviewProjects";
-import PlaceholderPage from "./shared/PlaceholderPage";
+import InstructorCohorts from "./instructor/InstructorCohort";
+import InstructorLessons from "./instructor/InstructorLessons";
+import InstructorStudents from "./instructor/InstructorStudents";
 
 const sidebarItems = [
   { icon: LayoutDashboard, label: "Dashboard", href: "/instructor" },
@@ -81,13 +83,13 @@ const InstructorDashboard = () => {
         <main className="flex-1 p-4 md:p-6">
           <Routes>
             <Route index element={<InstructorHome />} />
-            <Route path="cohorts" element={<PlaceholderPage title="My Cohorts" />} />
-            <Route path="lessons" element={<PlaceholderPage title="Lessons" />} />
+            <Route path="cohorts" element={<InstructorCohorts />} />
+            <Route path="lessons" element={<InstructorLessons />} />
             <Route path="live-classes" element={<ManageLiveClasses />} />
             <Route path="assignments" element={<ManageAssignments />} />
             <Route path="submissions" element={<ViewSubmissions />} />
             <Route path="projects" element={<ReviewProjects />} />
-            <Route path="students" element={<PlaceholderPage title="My Students" />} />
+            <Route path="students" element={<InstructorStudents />} />
           </Routes>
         </main>
       </div>
