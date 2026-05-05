@@ -31,28 +31,35 @@ const Scholarship = () => {
   const [showForm, setShowForm] = useState(false);
   const [programId, setProgramId] = useState("");
   const [reason, setReason] = useState("");
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
 
   const fetchData = async () => {
     if (!user) return;
-    const [{ data: progs }, { data: apps }] = await Promise.all([
+    const [{ data: progs }, { data: apps }, { data: prof }] = await Promise.all([
       supabase.from("programs").select("id, name").order("name"),
       (supabase as any).from("scholarship_applications")
         .select("id, program_id, reason, status, created_at, review_notes")
         .eq("user_id", user.id)
         .order("created_at", { ascending: false }),
+      supabase.from("profiles").select("full_name, phone").eq("user_id", user.id).maybeSingle(),
     ]);
     setPrograms(progs || []);
     setApplications((apps as Application[]) || []);
+    setFullName((prof as any)?.full_name || "");
+    setPhone((prof as any)?.phone || "");
+    setEmail(user.email || "");
     setLoading(false);
   };
 
   useEffect(() => { fetchData(); }, [user]);
 
   const handleSubmit = async () => {
-    if (!user || !programId || !reason.trim()) {
-      toast({ title: "Missing fields", description: "Please select a program and provide a reason.", variant: "destructive" });
+    if (!user || !programId || !reason.trim() || !fullName.trim() || !email.trim() || !phone.trim()) {
+      toast({ title: "Missing fields", description: "Please fill all fields.", variant: "destructive" });
       return;
     }
     setSubmitting(true);
@@ -60,6 +67,9 @@ const Scholarship = () => {
       user_id: user.id,
       program_id: programId,
       reason: reason.trim(),
+      full_name: fullName.trim(),
+      email: email.trim(),
+      phone: phone.trim(),
     });
     setSubmitting(false);
     if (error) {
