@@ -155,7 +155,14 @@ const ManageScholarships = () => {
               <TableBody>
                 {filtered.map(r => (
                   <TableRow key={r.id}>
-                    <TableCell className="font-medium">{r.student_name}</TableCell>
+                    <TableCell className="font-medium">
+                      <div>{r.full_name || r.student_name}</div>
+                      {(r.email || r.phone) && (
+                        <div className="text-xs text-muted-foreground">
+                          {r.email}{r.email && r.phone ? " • " : ""}{r.phone}
+                        </div>
+                      )}
+                    </TableCell>
                     <TableCell>{r.program_name}</TableCell>
                     <TableCell className="max-w-xs">
                       <p className="text-sm line-clamp-3">{r.reason}</p>
