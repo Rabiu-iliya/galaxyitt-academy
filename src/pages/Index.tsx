@@ -59,7 +59,7 @@ const Index = () => {
           </p>
           <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Link to="/programs">
-              <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 text-base px-8">
+              <Button size="lg" className="bg-accent text-white hover:bg-accent/90 text-base px-8 py-3">
                 Explore Programs <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </Link>
