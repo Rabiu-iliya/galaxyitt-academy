@@ -64,7 +64,7 @@ const Index = () => {
               </Button>
             </Link>
             <Link to="/register">
-              <Button size="lg" variant="outline" className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 text-base px-8">
+              <Button size="lg" className="bg-white text-black hover:bg-white/90 text-base px-8 py-3">
                 Apply Now
               </Button>
             </Link>
@@ -306,7 +306,7 @@ const Index = () => {
               </Button>
             </Link>
             <Link to="/programs">
-              <Button size="lg" variant="outline" className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 px-8">
+              <Button size="lg" className="bg-white text-black hover:bg-white/90 px-8">
                 Browse Programs
               </Button>
             </Link>
