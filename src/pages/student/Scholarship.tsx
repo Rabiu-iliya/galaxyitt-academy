@@ -101,6 +101,20 @@ const Scholarship = () => {
         <Card>
           <CardHeader><CardTitle>New Scholarship Application</CardTitle></CardHeader>
           <CardContent className="space-y-4">
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div>
+                <Label>Full Name</Label>
+                <input className="w-full h-10 px-3 rounded-md border border-input bg-background" value={fullName} onChange={e => setFullName(e.target.value)} maxLength={100} />
+              </div>
+              <div>
+                <Label>Email</Label>
+                <input type="email" className="w-full h-10 px-3 rounded-md border border-input bg-background" value={email} onChange={e => setEmail(e.target.value)} maxLength={255} />
+              </div>
+              <div className="sm:col-span-2">
+                <Label>Phone</Label>
+                <input className="w-full h-10 px-3 rounded-md border border-input bg-background" value={phone} onChange={e => setPhone(e.target.value)} maxLength={30} placeholder="08039606006" />
+              </div>
+            </div>
             <div>
               <Label>Program</Label>
               <Select value={programId} onValueChange={setProgramId}>
