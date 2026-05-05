@@ -2,18 +2,30 @@ import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { Video, FileText, Calendar } from "lucide-react";
+import { Video, FileText, Calendar, Award } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { useEnrollment } from "@/hooks/useEnrollment";
+import { Link } from "react-router-dom";
 
 const DashboardHome = () => {
-  const { profile } = useAuth();
+  const { profile, user } = useAuth();
   const { enrollment, loading } = useEnrollment();
   const [nextClass, setNextClass] = useState<{ title: string; scheduled_at: string } | null>(null);
   const [assignmentCount, setAssignmentCount] = useState(0);
+  const [latestApp, setLatestApp] = useState<{ status: string; created_at: string } | null>(null);
 
   useEffect(() => {
+    if (user) {
+      (supabase as any)
+        .from("scholarship_applications")
+        .select("status, created_at")
+        .eq("user_id", user.id)
+        .order("created_at", { ascending: false })
+        .limit(1)
+        .maybeSingle()
+        .then(({ data }: any) => setLatestApp(data || null));
+    }
     if (!enrollment) return;
     // Fetch next live class
     supabase
@@ -42,6 +54,25 @@ const DashboardHome = () => {
         <h2 className="text-2xl font-bold">Welcome back, {profile?.full_name || "Student"}!</h2>
         <p className="text-muted-foreground">Here's your learning overview.</p>
       </div>
+
+      {latestApp && (
+        <Link to="/student/scholarship" className="block mb-4">
+          <div className={`rounded-lg p-4 border flex items-center gap-3 ${
+            latestApp.status === "approved" ? "bg-green-50 border-green-200 dark:bg-green-950/30 dark:border-green-900"
+            : latestApp.status === "rejected" ? "bg-red-50 border-red-200 dark:bg-red-950/30 dark:border-red-900"
+            : "bg-yellow-50 border-yellow-200 dark:bg-yellow-950/30 dark:border-yellow-900"
+          }`}>
+            <Award className="h-5 w-5 text-accent flex-shrink-0" />
+            <div className="flex-1 text-sm">
+              <span className="font-semibold">Scholarship application:</span>{" "}
+              <span className="capitalize">{latestApp.status}</span>
+              {latestApp.status === "pending" && " — under review"}
+              {latestApp.status === "approved" && " — congratulations! 🎉"}
+              {latestApp.status === "rejected" && " — view notes"}
+            </div>
+          </div>
+        </Link>
+      )}
 
       {!enrollment ? (
         <Card>
