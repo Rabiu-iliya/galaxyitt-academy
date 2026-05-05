@@ -59,12 +59,12 @@ const Index = () => {
           </p>
           <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Link to="/programs">
-              <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 text-base px-8">
+              <Button size="lg" className="bg-accent text-white hover:bg-accent/90 text-base px-8 py-3">
                 Explore Programs <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </Link>
             <Link to="/register">
-              <Button size="lg" variant="outline" className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 text-base px-8">
+              <Button size="lg" className="bg-white text-black hover:bg-white/90 text-base px-8 py-3">
                 Apply Now
               </Button>
             </Link>
@@ -306,7 +306,7 @@ const Index = () => {
               </Button>
             </Link>
             <Link to="/programs">
-              <Button size="lg" variant="outline" className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 px-8">
+              <Button size="lg" className="bg-white text-black hover:bg-white/90 px-8">
                 Browse Programs
               </Button>
             </Link>
