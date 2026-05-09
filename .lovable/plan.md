@@ -1,59 +1,45 @@
+## Scope
 
-# GalaxyITT Technology Academy — Phase 1
+Three large requests in one turn. Implementing all of it well requires schema changes plus rewrites of ~8 pages. Here is the plan I propose — please confirm or trim before I start.
 
-## Design System
-- **Colors**: Blue (#1E3A5F primary) + Gold (#D4A843 accent) on white background
-- **Dark mode toggle** available
-- **Typography**: Modern, clean — Inter/similar sans-serif
-- **Style**: Premium, card-based, international academy feel
+## 1. Schema migrations (Supabase)
 
-## 1. Landing Page
-- **Hero**: Bold headline, CTA to register, academy branding
-- **Programs section**: Card grid showing all 14 programs with prices (₦)
-- **About Academy**: Mission, vision
-- **Why Choose Us**: Key differentiators (cohort-based, live classes, certificates)
-- **How It Works**: Register → Choose Program → Pay → Learn
-- **Testimonials**: Placeholder testimonials
-- **Pricing overview**: Program price table
-- **Footer**: Links, social, contact info
+- Add `instructor_id uuid` to `cohorts` (assignment of instructor to cohort).
+- Add `cohort_id uuid` and `instructor_id uuid` to `modules` and `lessons`.
+- Create `announcements` table (`title`, `body`, `created_by`, `audience`, `created_at`) with RLS: admins manage, authenticated read.
+- Create `app_settings` table (single-row, key/value JSON) with RLS: admins read/update, authenticated read.
+- Update RLS on `modules`/`lessons` so instructors can only manage rows where `instructor_id = auth.uid()`.
 
-## 2. Authentication (Supabase Auth)
-- Register (email/password + name)
-- Login
-- Forgot password / reset password flow
-- Email verification
-- Role-based access (roles table: super_admin, admin, instructor, student)
-- Protected routes per role
+## 2. Data-connected page rewrites
 
-## 3. Programs & Enrollment Pages
-- **Programs listing page**: All 14 programs as cards with price, duration, description, "Apply" button
-- **Program detail page**: Full description, curriculum outline, cohort availability, enroll button
-- **Enrollment flow**: Choose program → Select available cohort → Mock payment step → Confirmation
+| Page | Change |
+|---|---|
+| `admin/AdminInstructors.tsx` | List instructors from `user_roles` joined with `profiles`; show name, phone, assigned cohorts count. |
+| `admin/AdminAnalytics.tsx` | Add recharts `LineChart` of new users per month from `profiles.created_at`; keep stat cards. |
+| `admin/AdminAnnouncements.tsx` | Form to create + table to list from `announcements`. |
+| `admin/AdminCertificates.tsx` | Already joins — verify and add empty/loading states. |
+| `admin/AdminSettings.tsx` | Fetch + update single `app_settings` row (site name, contact email, scholarship open). |
+| `instructor/InstructorStudents.tsx` | Fetch from `enrollments` joined to `profiles` filtered by cohorts where `instructor_id = me`. |
+| `instructor/InstructorCohort.tsx` | Fetch cohorts where `instructor_id = me`; show program name. |
+| `instructor/InstructorLessons.tsx` | New cohort → module → lesson nested workflow with create buttons; card grid UI. |
+| `instructor/InstructorHome.tsx` | Real counts: my cohorts, my students, pending submissions. |
 
-## 4. Database Schema (Supabase)
-- `profiles` — user info linked to auth
-- `user_roles` — role-based access (admin, instructor, student, super_admin)
-- `programs` — 14 pre-seeded programs with name, description, price, duration
-- `cohorts` — start/end dates, max students, status, linked program
-- `enrollments` — user + program + cohort, payment status
-- `payments` — amount, method, status, invoice reference (mock for now)
+## 3. UI polish
 
-## 5. Basic Dashboards (Shell/Layout)
-- **Student dashboard shell**: Sidebar with navigation items (Dashboard, My Program, Modules, Live Classes, Assignments, Certificates, Payments, Profile). Shows enrolled program info.
-- **Admin dashboard shell**: Sidebar with admin nav. Programs/cohorts/students management pages (list views).
-- **Instructor dashboard shell**: Sidebar with instructor nav. Assigned cohorts view.
+- Install `recharts`.
+- Card layout for lessons grouped under modules (`md:grid-cols-2`, `rounded-xl`, hover scale, `BookOpen`/`Clock` icons).
+- Use existing semantic tokens (not raw `slate-800` etc.) so dark/light theme keeps working.
 
-## 6. Mobile Responsive
-- All pages fully responsive
-- Collapsible sidebar on mobile
-- Touch-friendly cards and navigation
+## 4. Out of scope (flag)
 
-## What's Deferred to Later Phases
-- Payment gateway integration (Paystack/Flutterwave) — currently mock
-- Learning modules, lessons, video player
-- Assignment system with file upload & grading
-- Live classroom (3rd-party embed like Jitsi/Daily.co)
-- Certificate generation (PDF)
-- Analytics & reporting
-- Attendance tracking
-- Announcements system
+- Adding a real assignment UI for admins to attach instructors to cohorts — I'll add an "Assign Instructor" select on `ManageCohorts` so the new flow is usable end-to-end.
+- I will NOT touch existing working pages (Programs, Scholarships, Projects, Support).
+
+## Technical notes
+
+- Migration runs first (single call), then code edits.
+- RLS update for `lessons`/`modules` keeps existing admin policy and replaces the broad instructor `has_role` policy with `instructor_id = auth.uid()`.
+- `announcements.audience` enum: `all | students | instructors`.
+- Notifications: optional — creating an announcement could fan out to `notifications`; I'll skip unless you ask.
+
+Confirm and I'll execute.

@@ -14,6 +14,60 @@ export type Database = {
   }
   public: {
     Tables: {
+      announcements: {
+        Row: {
+          audience: Database["public"]["Enums"]["announcement_audience"]
+          body: string
+          created_at: string
+          created_by: string | null
+          id: string
+          title: string
+        }
+        Insert: {
+          audience?: Database["public"]["Enums"]["announcement_audience"]
+          body: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          title: string
+        }
+        Update: {
+          audience?: Database["public"]["Enums"]["announcement_audience"]
+          body?: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          title?: string
+        }
+        Relationships: []
+      }
+      app_settings: {
+        Row: {
+          contact_email: string
+          contact_phone: string
+          id: string
+          scholarship_open: boolean
+          site_name: string
+          updated_at: string
+        }
+        Insert: {
+          contact_email?: string
+          contact_phone?: string
+          id?: string
+          scholarship_open?: boolean
+          site_name?: string
+          updated_at?: string
+        }
+        Update: {
+          contact_email?: string
+          contact_phone?: string
+          id?: string
+          scholarship_open?: boolean
+          site_name?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       assignments: {
         Row: {
           created_at: string
@@ -81,6 +135,7 @@ export type Database = {
           created_at: string
           end_date: string
           id: string
+          instructor_id: string | null
           max_students: number
           name: string
           program_id: string
@@ -92,6 +147,7 @@ export type Database = {
           created_at?: string
           end_date: string
           id?: string
+          instructor_id?: string | null
           max_students?: number
           name: string
           program_id: string
@@ -103,6 +159,7 @@ export type Database = {
           created_at?: string
           end_date?: string
           id?: string
+          instructor_id?: string | null
           max_students?: number
           name?: string
           program_id?: string
@@ -176,9 +233,11 @@ export type Database = {
       }
       lessons: {
         Row: {
+          cohort_id: string | null
           content: string | null
           created_at: string
           id: string
+          instructor_id: string | null
           module_id: string
           order_number: number
           title: string
@@ -186,9 +245,11 @@ export type Database = {
           video_url: string | null
         }
         Insert: {
+          cohort_id?: string | null
           content?: string | null
           created_at?: string
           id?: string
+          instructor_id?: string | null
           module_id: string
           order_number?: number
           title: string
@@ -196,9 +257,11 @@ export type Database = {
           video_url?: string | null
         }
         Update: {
+          cohort_id?: string | null
           content?: string | null
           created_at?: string
           id?: string
+          instructor_id?: string | null
           module_id?: string
           order_number?: number
           title?: string
@@ -271,27 +334,33 @@ export type Database = {
       }
       modules: {
         Row: {
+          cohort_id: string | null
           created_at: string
           description: string | null
           id: string
+          instructor_id: string | null
           order_number: number
           program_id: string
           title: string
           updated_at: string
         }
         Insert: {
+          cohort_id?: string | null
           created_at?: string
           description?: string | null
           id?: string
+          instructor_id?: string | null
           order_number?: number
           program_id: string
           title: string
           updated_at?: string
         }
         Update: {
+          cohort_id?: string | null
           created_at?: string
           description?: string | null
           id?: string
+          instructor_id?: string | null
           order_number?: number
           program_id?: string
           title?: string
@@ -707,6 +776,7 @@ export type Database = {
       }
     }
     Enums: {
+      announcement_audience: "all" | "students" | "instructors"
       app_role: "super_admin" | "admin" | "instructor" | "student"
       cohort_status: "upcoming" | "active" | "completed" | "cancelled"
       enrollment_status: "pending" | "active" | "completed" | "dropped"
@@ -840,6 +910,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      announcement_audience: ["all", "students", "instructors"],
       app_role: ["super_admin", "admin", "instructor", "student"],
       cohort_status: ["upcoming", "active", "completed", "cancelled"],
       enrollment_status: ["pending", "active", "completed", "dropped"],
