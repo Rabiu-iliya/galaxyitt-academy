@@ -6,14 +6,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { GraduationCap } from "lucide-react";
-import { useAuth } from "@/contexts/AuthContext";
+import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
 const Register = () => {
-  const [form, setForm] = useState({ name: "", email: "", password: "", confirm: "" });
+  const [form, setForm] = useState({ name: "", email: "", phone: "", password: "", confirm: "", role: "student" });
   const [loading, setLoading] = useState(false);
-  const { signUp } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -23,8 +23,23 @@ const Register = () => {
       toast({ title: "Error", description: "Passwords do not match.", variant: "destructive" });
       return;
     }
+    if (form.password.length < 6) {
+      toast({ title: "Weak password", description: "Use at least 6 characters.", variant: "destructive" });
+      return;
+    }
     setLoading(true);
-    const { error } = await signUp(form.email, form.password, form.name);
+    const { error } = await supabase.auth.signUp({
+      email: form.email,
+      password: form.password,
+      options: {
+        data: {
+          full_name: form.name,
+          phone: form.phone,
+          role: form.role === "instructor" ? "instructor" : "student",
+        },
+        emailRedirectTo: window.location.origin,
+      },
+    });
     setLoading(false);
     if (error) {
       toast({ title: "Registration failed", description: error.message, variant: "destructive" });
@@ -55,6 +70,33 @@ const Register = () => {
               <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
                 <Input id="email" type="email" placeholder="you@example.com" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} required />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="phone">Phone Number</Label>
+                <Input id="phone" type="tel" placeholder="08039606006" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} required />
+              </div>
+              <div className="space-y-2">
+                <Label>I am registering as</Label>
+                <RadioGroup
+                  value={form.role}
+                  onValueChange={(v) => setForm({ ...form, role: v })}
+                  className="grid grid-cols-2 gap-3"
+                >
+                  <Label
+                    htmlFor="role-student"
+                    className={`flex cursor-pointer items-center gap-2 rounded-md border p-3 text-sm transition-colors ${form.role === "student" ? "border-accent bg-accent/10" : "hover:bg-muted"}`}
+                  >
+                    <RadioGroupItem id="role-student" value="student" />
+                    Student
+                  </Label>
+                  <Label
+                    htmlFor="role-instructor"
+                    className={`flex cursor-pointer items-center gap-2 rounded-md border p-3 text-sm transition-colors ${form.role === "instructor" ? "border-accent bg-accent/10" : "hover:bg-muted"}`}
+                  >
+                    <RadioGroupItem id="role-instructor" value="instructor" />
+                    Instructor
+                  </Label>
+                </RadioGroup>
               </div>
               <div className="space-y-2">
                 <Label htmlFor="password">Password</Label>
