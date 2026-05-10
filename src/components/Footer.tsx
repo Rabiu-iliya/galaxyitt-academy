@@ -19,8 +19,8 @@ export function Footer() {
 
   return (
     <footer className="border-t bg-primary text-primary-foreground">
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid gap-8 md:grid-cols-4">
+      <div className="container mx-auto px-4 py-10">
+        <div className="grid gap-8 sm:grid-cols-2 md:gap-6 lg:grid-cols-4">
           <div>
             <div className="mb-4 flex items-center gap-2">
               <GraduationCap className="h-8 w-8 text-accent" />
@@ -36,11 +36,12 @@ export function Footer() {
           <div>
             <h4 className="mb-4 font-semibold text-accent">Quick Links</h4>
             <div className="flex flex-col gap-2 text-sm text-primary-foreground/70">
-              <Link to="/programs" className="hover:text-primary-foreground">Programs</Link>
-              <Link to="/#about" className="hover:text-primary-foreground">About Us</Link>
-              <Link to="/#scholarship" className="hover:text-primary-foreground">Scholarship</Link>
-              <Link to="/#pricing" className="hover:text-primary-foreground">Pricing</Link>
-              <Link to="/register" className="hover:text-primary-foreground">Apply Now</Link>
+              <Link to="/programs" className="transition-colors hover:text-accent">Programs</Link>
+              <Link to="/#about" className="transition-colors hover:text-accent">About Us</Link>
+              <Link to="/#scholarship" className="transition-colors hover:text-accent">Scholarship</Link>
+              <Link to="/#pricing" className="transition-colors hover:text-accent">Pricing</Link>
+              <Link to="/register" className="transition-colors hover:text-accent">Apply Now</Link>
+              <Link to="/login" className="transition-colors hover:text-accent">Log In</Link>
             </div>
           </div>
 
@@ -51,7 +52,7 @@ export function Footer() {
                 <span className="text-primary-foreground/50">Loading…</span>
               ) : (
                 programs.map((p) => (
-                  <Link key={p.id} to={`/programs/${p.slug}`} className="hover:text-primary-foreground">
+                  <Link key={p.id} to={`/programs/${p.slug}`} className="transition-colors hover:text-accent">
                     {p.name}
                   </Link>
                 ))
@@ -71,14 +72,14 @@ export function Footer() {
                 <span>08039606006</span>
               </div>
               <div className="flex items-start gap-2">
-                <MapPin className="h-4 w-4" />
+                <MapPin className="h-4 w-4 mt-0.5 shrink-0" />
                 <span>No. 2 Kiyawa Road, Dutse, Jigawa State</span>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="mt-8 border-t border-primary-foreground/20 pt-8 text-center text-sm text-primary-foreground/50">
+        <div className="mt-8 border-t border-primary-foreground/20 pt-6 text-center text-xs sm:text-sm text-primary-foreground/50">
           © {new Date().getFullYear()} GalaxyITT Technology Academy. All rights reserved.
         </div>
       </div>
