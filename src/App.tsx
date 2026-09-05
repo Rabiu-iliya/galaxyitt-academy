@@ -18,6 +18,12 @@ import StudentDashboard from "./pages/StudentDashboard";
 import AdminDashboard from "./pages/AdminDashboard";
 import InstructorDashboard from "./pages/InstructorDashboard";
 import Verify from "./pages/Verify";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
+import Faq from "./pages/Faq";
+import ScholarshipInfo from "./pages/ScholarshipInfo";
+import Terms from "./pages/Terms";
+import Privacy from "./pages/Privacy";
 
 const queryClient = new QueryClient();
 
@@ -33,6 +39,12 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/programs" element={<Programs />} />
             <Route path="/programs/:slug" element={<ProgramDetail />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/faq" element={<Faq />} />
+            <Route path="/scholarship" element={<ScholarshipInfo />} />
+            <Route path="/terms" element={<Terms />} />
+            <Route path="/privacy" element={<Privacy />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
@@ -40,10 +52,11 @@ const App = () => (
             <Route path="/verify/:id" element={<Verify />} />
             <Route path="/student" element={<ProtectedRoute><StudentDashboard /></ProtectedRoute>} />
             <Route path="/student/*" element={<ProtectedRoute><StudentDashboard /></ProtectedRoute>} />
+            <Route path="/admin" element={<ProtectedRoute allowedRoles={["admin", "super_admin"]}><AdminDashboard /></ProtectedRoute>} />
             <Route path="/admin/*" element={<ProtectedRoute allowedRoles={["admin", "super_admin"]}><AdminDashboard /></ProtectedRoute>} />
-            <Route path="/admin/*" element={<ProtectedRoute allowedRoles={["admin", "super_admin"]}><AdminDashboard /></ProtectedRoute>} />
+            <Route path="/instructor" element={<ProtectedRoute allowedRoles={["instructor"]}><InstructorDashboard /></ProtectedRoute>} />
             <Route path="/instructor/*" element={<ProtectedRoute allowedRoles={["instructor"]}><InstructorDashboard /></ProtectedRoute>} />
-            <Route path="/instructor/*" element={<ProtectedRoute allowedRoles={["instructor"]}><InstructorDashboard /></ProtectedRoute>} />
+
 
             <Route path="*" element={<NotFound />} />
           </Routes>
