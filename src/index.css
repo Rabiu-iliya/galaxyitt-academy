@@ -100,3 +100,71 @@
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
   }
 }
+
+/* ---------- Animated galaxy background ---------- */
+@layer components {
+  .galaxy-orb {
+    @apply absolute rounded-full blur-3xl;
+    will-change: transform;
+  }
+  .galaxy-orb-1 {
+    width: 32rem;
+    height: 32rem;
+    top: -8rem;
+    left: -6rem;
+    background: radial-gradient(circle, hsl(var(--galaxy-gold) / 0.35) 0%, transparent 70%);
+    animation: galaxy-drift-a 22s ease-in-out infinite;
+  }
+  .galaxy-orb-2 {
+    width: 28rem;
+    height: 28rem;
+    bottom: -10rem;
+    right: -4rem;
+    background: radial-gradient(circle, hsl(var(--galaxy-blue-light) / 0.55) 0%, transparent 70%);
+    animation: galaxy-drift-b 26s ease-in-out infinite;
+  }
+  .galaxy-orb-3 {
+    width: 22rem;
+    height: 22rem;
+    top: 30%;
+    left: 55%;
+    background: radial-gradient(circle, hsl(var(--galaxy-gold) / 0.2) 0%, transparent 70%);
+    animation: galaxy-drift-c 30s ease-in-out infinite;
+  }
+  .galaxy-stars {
+    @apply absolute inset-0;
+    background-image:
+      radial-gradient(1.5px 1.5px at 12% 22%, rgba(255, 255, 255, 0.85) 50%, transparent 51%),
+      radial-gradient(1.5px 1.5px at 68% 14%, rgba(255, 255, 255, 0.7) 50%, transparent 51%),
+      radial-gradient(1.5px 1.5px at 34% 72%, rgba(255, 255, 255, 0.6) 50%, transparent 51%),
+      radial-gradient(2px 2px at 82% 62%, rgba(255, 255, 255, 0.8) 50%, transparent 51%),
+      radial-gradient(1.5px 1.5px at 52% 40%, rgba(255, 255, 255, 0.5) 50%, transparent 51%),
+      radial-gradient(1.5px 1.5px at 91% 32%, rgba(255, 255, 255, 0.65) 50%, transparent 51%),
+      radial-gradient(1.5px 1.5px at 22% 88%, rgba(255, 255, 255, 0.55) 50%, transparent 51%);
+    animation: galaxy-twinkle 6s ease-in-out infinite;
+  }
+}
+
+@keyframes galaxy-drift-a {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(6rem, 3rem, 0) scale(1.15); }
+}
+@keyframes galaxy-drift-b {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1.1); }
+  50% { transform: translate3d(-5rem, -4rem, 0) scale(0.95); }
+}
+@keyframes galaxy-drift-c {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(0.9); }
+  50% { transform: translate3d(-4rem, 4rem, 0) scale(1.2); }
+}
+@keyframes galaxy-twinkle {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 0.9; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .galaxy-orb,
+  .galaxy-stars {
+    animation: none !important;
+  }
+}
