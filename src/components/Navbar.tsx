@@ -34,8 +34,11 @@ export function Navbar() {
 
   const links = [
     { label: "Programs", href: "/programs" },
-    { label: "About", href: "/#about" },
+    { label: "About", href: "/about" },
+    { label: "Scholarship", href: "/scholarship" },
     { label: "Pricing", href: "/#pricing" },
+    { label: "FAQ", href: "/faq" },
+    { label: "Contact", href: "/contact" },
   ];
 
   return (
