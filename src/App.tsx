@@ -18,6 +18,12 @@ import StudentDashboard from "./pages/StudentDashboard";
 import AdminDashboard from "./pages/AdminDashboard";
 import InstructorDashboard from "./pages/InstructorDashboard";
 import Verify from "./pages/Verify";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
+import Faq from "./pages/Faq";
+import ScholarshipInfo from "./pages/ScholarshipInfo";
+import Terms from "./pages/Terms";
+import Privacy from "./pages/Privacy";
 
 const queryClient = new QueryClient();
 
